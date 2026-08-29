@@ -1,0 +1,11 @@
+server {
+  listen 80;
+  server_name {{ noembed_domains }};
+
+  location / {
+    proxy_pass http://localhost:5006/;
+  }
+  location /i {
+    proxy_pass http://localhost:5007/i;
+  }
+}

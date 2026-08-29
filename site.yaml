@@ -1,0 +1,6 @@
+- name: Relaychat
+  hosts: relaychat_hosts
+  become: true
+  roles:
+    - nginx
+    - services

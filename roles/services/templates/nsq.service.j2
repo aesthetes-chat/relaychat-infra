@@ -1,0 +1,13 @@
+[Unit]
+Description=NSQ
+After=network.target
+
+[Service]
+Type=simple
+User=leedo
+Group=leedo
+ExecStart=/usr/local/bin/nsqd -data-path /home/leedo/.nsqd
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,11 @@
+- name: Reload systemd
+  ansible.builtin.systemd_service:
+    daemon_reload: true
+
+- name: Restart changed services
+  ansible.builtin.systemd_service:
+    name: "{{ item.restart_service | default(item.name) }}"
+    state: restarted
+  loop: "{{ service_units.results | selectattr('changed') | map(attribute='item') | list }}"
+  loop_control:
+    label: "{{ item.restart_service | default(item.name) }}"

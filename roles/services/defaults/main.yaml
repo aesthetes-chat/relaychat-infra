@@ -1,0 +1,10 @@
+relaychat_services:
+  - name: nsq
+  - name: web-imageproxy
+  - name: noembed
+  - name: liercd
+  - name: lierc-logger
+  - name: lierc-notifier
+  - name: lierc-identd
+  - name: lierc-api
+  - name: lierc-api-stream

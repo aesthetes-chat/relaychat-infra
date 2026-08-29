@@ -1,0 +1,14 @@
+- name: Deploy systemd unit files
+  ansible.builtin.template:
+    src: "{{ item.name }}.service.j2"
+    dest: "/etc/systemd/system/{{ item.name }}.service"
+    owner: root
+    group: root
+    mode: "0644"
+  loop: "{{ relaychat_services }}"
+  loop_control:
+    label: "{{ item.name }}"
+  register: service_units
+  notify:
+    - Reload systemd
+    - Restart changed services
