@@ -1,0 +1,15 @@
+[Unit]
+Description=Lierc Identd
+After=network.target
+
+[Service]
+Type=simple
+User=leedo
+Group=leedo
+AmbientCapabilities=CAP_NET_BIND_SERVICE
+EnvironmentFile=/home/leedo/src/lierc/.prod.env
+ExecStart=/home/leedo/go/bin/lierc-identd
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

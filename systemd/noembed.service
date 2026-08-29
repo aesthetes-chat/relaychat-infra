@@ -1,0 +1,14 @@
+[Unit]
+Description=Noembed
+After=network.target
+
+[Service]
+Type=simple
+User=leedo
+Group=leedo
+WorkingDirectory=/home/leedo/src/noembed
+ExecStart=/home/leedo/src/noembed/start.sh
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

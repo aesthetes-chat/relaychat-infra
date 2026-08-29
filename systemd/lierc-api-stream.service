@@ -1,0 +1,14 @@
+[Unit]
+Description=Lierc Streaming API
+After=network.target
+
+[Service]
+Type=simple
+User=leedo
+Group=leedo
+WorkingDirectory=/home/leedo/src/lierc-api
+ExecStart=/home/leedo/src/lierc-api/bin/stream
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,15 @@
+[Unit]
+Description=Lierc API
+After=network.target
+
+[Service]
+Type=simple
+User=leedo
+Group=leedo
+RestartKillSignal=SIGHUP
+WorkingDirectory=/home/leedo/src/lierc-api
+ExecStart=/home/leedo/src/lierc-api/bin/api
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

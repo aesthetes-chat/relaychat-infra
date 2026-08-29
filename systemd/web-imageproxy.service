@@ -1,0 +1,14 @@
+[Unit]
+Description=Image proxy
+After=network.target
+
+[Service]
+Type=simple
+User=leedo
+Group=leedo
+WorkingDirectory=/home/leedo/src/web-imageproxy
+ExecStart=/home/leedo/src/web-imageproxy/start.sh
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

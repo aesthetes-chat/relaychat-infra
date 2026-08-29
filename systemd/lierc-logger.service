@@ -1,0 +1,14 @@
+[Unit]
+Description=Lierc Logger
+After=network.target
+
+[Service]
+Type=simple
+User=leedo
+Group=leedo
+EnvironmentFile=/home/leedo/src/lierc/.prod.env
+ExecStart=/home/leedo/go/bin/lierc-logger
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

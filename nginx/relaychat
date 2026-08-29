@@ -1,0 +1,30 @@
+server {
+	listen 80;
+	server_name relaychat.party new.relaychat.party;
+
+	access_log /var/log/nginx/relay.party-access.log;
+	add_header Strict-Transport-Security "max-age=31536000; includeSubDomains";
+
+	location /api/ {
+		proxy_buffering off;
+    		proxy_cache off;
+		proxy_pass http://localhost:5004/;
+	}
+	location /api/events {
+		proxy_buffering off;
+    		proxy_cache off;
+		chunked_transfer_encoding on;
+		proxy_read_timeout 86400s;
+		proxy_pass http://localhost:5003/;
+	}
+	location / {
+		gzip on;
+		gzip_min_length 256;
+		gzip_comp_level 6;
+		gzip_proxied any;
+        	add_header Surrogate-Key "relaychat-assets";
+        	add_header Surrogate-Control "max-age=3600, stale-while-revalidate=30";
+		root /var/www/lierc-minimal-ui;
+		index index.html;
+	}
+}
