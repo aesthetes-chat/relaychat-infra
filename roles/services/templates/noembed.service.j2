@@ -1,14 +1,21 @@
 [Unit]
 Description=Noembed
-After=network.target
+Requires=docker.service
+After=docker.service
 
 [Service]
 Type=simple
-User=leedo
-Group=leedo
-WorkingDirectory=/home/leedo/src/noembed
-ExecStart=/home/leedo/src/noembed/start.sh
-Restart=on-failure
+TimeoutStartSec=0
+Restart=always
+ExecStartPre=-/usr/bin/docker stop %n
+ExecStartPre=-/usr/bin/docker rm %n
+ExecStartPre=/usr/bin/docker pull ghcr.io/leedo/noembed:latest
+ExecStart=/usr/bin/docker run --rm \
+  --name %n \
+  -p 5006:5006 \
+  --network host \
+  ghcr.io/leedo/noembed:latest
+ExecStop=/usr/bin/docker stop %n
 
 [Install]
 WantedBy=multi-user.target
