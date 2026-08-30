@@ -1,15 +1,17 @@
 [Unit]
 Description=Lierc API
-After=network.target
+Requires=docker.service
+After=docker.service
 
 [Service]
 Type=simple
-User=leedo
-Group=leedo
-RestartKillSignal=SIGHUP
-WorkingDirectory=/home/leedo/src/lierc-api
-ExecStart=/home/leedo/src/lierc-api/bin/api
-Restart=on-failure
+TimeoutStartSec=0
+Restart=always
+ExecStartPre=-/usr/bin/docker stop %n
+ExecStartPre=-/usr/bin/docker rm %n
+ExecStartPre=/usr/bin/docker pull ghcr.io/lierc/lierc:latest
+ExecStart=/usr/bin/docker run --rm --name %n -p 5004:5004 ghcr.io/lierc/lierc:latest
+ExecStop=/usr/bin/docker stop %n
 
 [Install]
 WantedBy=multi-user.target

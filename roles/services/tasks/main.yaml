@@ -1,3 +1,13 @@
+- name: Manage Docker Service
+  hosts: all
+  become: true
+  tasks:
+    - name: Ensure Docker service is started and enabled
+      ansible.builtin.systemd_service:
+        name: docker
+        state: started
+        enabled: true
+
 - name: Deploy systemd unit files
   ansible.builtin.template:
     src: "{{ item.name }}.service.j2"
