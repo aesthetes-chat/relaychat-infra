@@ -9,8 +9,8 @@ TimeoutStartSec=0
 Restart=always
 ExecStartPre=-/usr/bin/docker stop %n
 ExecStartPre=-/usr/bin/docker rm %n
-ExecStartPre=/usr/bin/docker pull ghcr.io/lierc/lierc:latest
-ExecStart=/usr/bin/docker run --rm --name %n -p 5004:5004 ghcr.io/lierc/lierc:latest
+ExecStartPre=/usr/bin/docker pull ghcr.io/lierc/lierc-api:latest
+ExecStart=/usr/bin/docker run --rm --name %n -p 5004:5004 ghcr.io/lierc/lierc-api:latest
 ExecStop=/usr/bin/docker stop %n
 
 [Install]
