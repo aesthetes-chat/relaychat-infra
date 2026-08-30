@@ -15,6 +15,8 @@ ExecStart=/usr/bin/docker run --rm \
   --name %n \
   -p 5003:5003 \
   --network host \
+  --log-driver=journald \
+  --log-opt tag=lierc-api-stream \
   ghcr.io/lierc/lierc-api:latest \
   perl -Ilocal/lib/perl5/ local/bin/plackup --server Twiggy -Ilib --listen :5003 bin/stream.psgi
 ExecStop=/usr/bin/docker stop %n

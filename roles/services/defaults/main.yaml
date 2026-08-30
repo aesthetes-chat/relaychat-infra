@@ -1,6 +1,7 @@
 ansible_user: leedo
 relaychat_services:
   - name: nsq
+  - name: memcached
   - name: web-imageproxy
   - name: noembed
   - name: liercd

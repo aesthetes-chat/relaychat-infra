@@ -1,5 +1,5 @@
 [Unit]
-Description=Noembed
+Description=memcached
 Requires=docker.service
 After=docker.service
 
@@ -9,14 +9,12 @@ TimeoutStartSec=0
 Restart=always
 ExecStartPre=-/usr/bin/docker stop %n
 ExecStartPre=-/usr/bin/docker rm %n
-ExecStartPre=/usr/bin/docker pull ghcr.io/leedo/noembed:latest
+ExecStartPre=/usr/bin/docker pull memcached:latest
 ExecStart=/usr/bin/docker run --rm \
   --name %n \
-  -p 5006:5006 \
+  -p 11211:11211 \
   --network host \
-  --log-driver=journald \
-  --log-opt tag=noembed \
-  ghcr.io/leedo/noembed:latest
+  memcached:latest
 ExecStop=/usr/bin/docker stop %n
 
 [Install]

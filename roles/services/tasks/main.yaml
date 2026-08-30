@@ -42,6 +42,14 @@
     groups: docker
     append: true
 
+- name: Generate config file from template
+  ansible.builtin.template:
+    src: templates/lierc.env.j2
+    dest: /etc/lierc.env
+    owner: root
+    group: root
+    mode: '0600'
+
 - name: Deploy systemd unit files
   ansible.builtin.template:
     src: "{{ item.name }}.service.j2"
