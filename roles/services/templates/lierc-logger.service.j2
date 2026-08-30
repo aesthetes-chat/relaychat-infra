@@ -1,14 +1,22 @@
 [Unit]
 Description=Lierc Logger
-After=network.target
+Requires=docker.service
+After=docker.service
 
 [Service]
 Type=simple
-User=leedo
-Group=leedo
-EnvironmentFile=/home/leedo/src/lierc/.prod.env
-ExecStart=/home/leedo/go/bin/lierc-logger
-Restart=on-failure
+TimeoutStartSec=0
+Restart=always
+ExecStartPre=-/usr/bin/docker stop %n
+ExecStartPre=-/usr/bin/docker rm %n
+ExecStartPre=/usr/bin/docker pull ghcr.io/lierc/lierc:latest
+ExecStart=/usr/bin/docker run --rm \
+  --env-file /etc/lierc.env \
+  --name %n \
+  --network host \
+  ghcr.io/lierc/lierc:latest \
+  lierc-logger
+ExecStop=/usr/bin/docker stop %n
 
 [Install]
 WantedBy=multi-user.target

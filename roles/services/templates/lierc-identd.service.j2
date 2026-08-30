@@ -1,15 +1,24 @@
 [Unit]
 Description=Lierc Identd
-After=network.target
+Requires=docker.service
+After=docker.service
 
 [Service]
 Type=simple
-User=leedo
-Group=leedo
-AmbientCapabilities=CAP_NET_BIND_SERVICE
-EnvironmentFile=/home/leedo/src/lierc/.prod.env
-ExecStart=/home/leedo/go/bin/lierc-identd
-Restart=on-failure
+TimeoutStartSec=0
+Restart=always
+ExecStartPre=-/usr/bin/docker stop %n
+ExecStartPre=-/usr/bin/docker rm %n
+ExecStartPre=/usr/bin/docker pull ghcr.io/lierc/lierc:latest
+ExecStart=/usr/bin/docker run --rm \
+  --cap-drop=ALL --cap-add=NET_BIND_SERVICE \
+  --env-file /etc/lierc.env \
+  --name %n \
+  -p 113:113 \
+  --network host \
+  ghcr.io/lierc/lierc:latest \
+  lierc-identd
+ExecStop=/usr/bin/docker stop %n
 
 [Install]
 WantedBy=multi-user.target
