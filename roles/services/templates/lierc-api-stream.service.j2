@@ -10,7 +10,13 @@ Restart=always
 ExecStartPre=-/usr/bin/docker stop %n
 ExecStartPre=-/usr/bin/docker rm %n
 ExecStartPre=/usr/bin/docker pull ghcr.io/lierc/lierc-api:latest
-ExecStart=/usr/bin/docker run --rm --name %n -p 5003:5003 ghcr.io/lierc/lierc-api:latest perl -Ilib -Ilocal/lib/perl5/ local/bin/plackup --server Twiggy -Ilib --listen :5003 bin/stream.psgi
+ExecStart=/usr/bin/docker run --rm \
+  --env-file /etc/lierc-api.env \
+  --name %n \
+  -p 5003:5003 \
+  --network host \
+  ghcr.io/lierc/lierc-api:latest \
+  perl -Ilib -Ilocal/lib/perl5/ local/bin/plackup --server Twiggy -Ilib --listen :5003 bin/stream.psgi
 ExecStop=/usr/bin/docker stop %n
 
 [Install]
