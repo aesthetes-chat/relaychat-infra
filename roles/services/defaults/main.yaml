@@ -4,7 +4,10 @@ relaychat_services:
   - name: memcached
   - name: web-imageproxy
   - name: noembed
+  # liercd drops all connected IRC sessions when restarted, so it is never
+  # restarted automatically. Restart it by hand when you are ready.
   - name: liercd
+    manual_restart: true
   - name: lierc-logger
   - name: lierc-notifier
   - name: lierc-identd

@@ -9,3 +9,15 @@
   loop: "{{ service_units.results | selectattr('changed') | map(attribute='item') | list }}"
   loop_control:
     label: "{{ item.restart_service | default(item.name) }}"
+  when: not (item.manual_restart | default(false))
+
+- name: Warn about changed services needing a manual restart
+  ansible.builtin.debug:
+    msg: >-
+      The unit file for {{ item.restart_service | default(item.name) }} changed but
+      the service was not restarted. Restart it manually when ready:
+      systemctl restart {{ item.restart_service | default(item.name) }}
+  loop: "{{ service_units.results | selectattr('changed') | map(attribute='item') | list }}"
+  loop_control:
+    label: "{{ item.restart_service | default(item.name) }}"
+  when: item.manual_restart | default(false)
