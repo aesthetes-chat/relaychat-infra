@@ -11,7 +11,7 @@ ExecStartPre=-/usr/bin/docker stop %n
 ExecStartPre=-/usr/bin/docker rm %n
 ExecStartPre=/usr/bin/docker pull ghcr.io/lierc/lierc-api:latest
 ExecStart=/usr/bin/docker run --rm \
-  --env-file /etc/lierc-api.env \
+  --env-file /etc/lierc.env \
   --name %n \
   -p 5004:5004 \
   --network host \
