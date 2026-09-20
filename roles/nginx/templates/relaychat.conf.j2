@@ -2,7 +2,7 @@ server {
   listen 80;
   server_name {{ relaychat_domains }};
 
-  access_log /var/log/nginx/relay.party-access.log;
+  access_log /var/log/nginx/relaychat.party-access.log;
   add_header Strict-Transport-Security "max-age=31536000; includeSubDomains";
 
   location /api/ {
